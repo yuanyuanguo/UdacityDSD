@@ -1,5 +1,5 @@
 # Project 1 - Blog Post :Exploring Stack Overflow Data 2017 
-
+ "sorry for the bad proxy in China, I tried several method to upload entire of my project in github but any file larger than 100mb will caused an error, so I have to give up upload several csvs. I just rename the data given 'survey_results_public.csv' into 'survey_results_public_2017.csv', nothing else changed."
 
 ## CRISP-DM Framework
 
