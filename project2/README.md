@@ -16,7 +16,7 @@ The main purpose of this project is to build a model to classify disaster messag
    -in **ETL Pipeline Preparation_YG.ipynb**, I merged the 2 .csv files, split categories and did necessary data cleaning
 
    -in **ML Pipeline Preparation_YG.ipynb**, I tried several algorithms given by sklearn for the given requirement.
-    -first is random-forest with TDF-df features, and then tried grid-search, and then I tried RidgeClassifierCV as a classifier and achieve the best result among the tests.
+    -first is random-forest with TF-IDF features, and then tried grid-search, and then I tried RidgeClassifierCV as a classifier and achieve the best result among the tests.
 2. And then, based on the guides, I filled the **process_data.py** and **train_classifier.py**.
 
    -in **process_data.py**, for I am not familiar with file_paths, I faced many problems, but after a huge number of tests, I manage to figure it out.
