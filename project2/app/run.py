@@ -47,18 +47,18 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
-    # For distribution of categories
+    # Distribution of Categories
     category_counts = df.drop(['id','message','original','genre'], axis=1).sum()
     category_names = list(category_counts.index)
 
-    # Most common words
+    # Top 10 Frequent Words
     word_sets = pd.Series(' '.join(df['message']).lower().split())
     top10_counts = word_sets[~word_sets.isin(stopwords.words("english"))].value_counts()[:9]
     top10_names = list(top10_counts.index)
     
     # Create visuals
     graphs = [
-        {
+        {# Graph1
             'data': [
                 Bar(
                     x=genre_names,
@@ -76,7 +76,7 @@ def index():
                 }
             }
         },
-        {
+        {# Graph2
             'data': [
                 Bar(
                     x=category_names,
@@ -96,7 +96,7 @@ def index():
                 }
             }
         },
-        {
+        {# Graph3
             'data': [
                 Bar(
                     x=top10_names,
@@ -122,8 +122,6 @@ def index():
     
     # render web page with plotly graphs
     return render_template('master.html', ids=ids, graphJSON=graphJSON)
-
-
 
 
 
