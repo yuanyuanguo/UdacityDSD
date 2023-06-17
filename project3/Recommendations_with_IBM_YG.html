@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Recommendations_with_IBM (1)</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Recommendations_with_IBM_YG</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -17151,6 +17151,7 @@ Size of the Vt matrix is: (714, 714)
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><strong>Provide your response here.</strong></p>
+<p>Because SVD can only achieve a very great result on non-sparse data. But the user-tiem matrices is full of '0.0's which also happens in most of the realistic datasets. So we should use Funk SVD as a solution.</p>
 
 </div>
 </div>
@@ -17953,8 +17954,9 @@ jp-needs-light-background
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><strong>Your response here.</strong></p>
 <p>We observe that we have an increasing training accuracy until around 300 latent features and then the increase is marginal. At the same time, the testing accuracy remains above 0.93 while increasing the latent features. The F1_score is a better indicator and in this case, the training F1_score also drastically reduces to increase around 300 latent features. The F1_score on the other hand remains very low with a maximum of 0.131 at 90 latent features.</p>
-<p>The main problem with this method for this dataset is that we have a very low number of users (20) for which we can make predictions. A larger dataset should enable to improvement the results. and also the classes are very unbalanced and the accuracy poorly represents the ability to correctly predict if the user saw a movie or not.</p>
-<p>For me, as I discussed in the project, I will try to use some reinforcement learning algorithms or other ML methods to have a try. Users' behavior and taste could change over time, and the lack of historical data is a problem that we always faced to. So perhaps if we model such a system as a game of searching and apply even a multi-bandit or e-greedy algorithm, the result could be improved.</p>
+<p>The main problem with this method for this dataset is that we have a very low number of users (20) for which we can make predictions, which is not enough to actually represent how well our SVD works towards making predictions for recommendations on the test data. And the reason that the accuracy is so highe is due to the substantial class imbalance of 1's and 0's. A larger dataset should enable to improvement the results. and also the classes are very unbalanced and the accuracy poorly represents the ability to correctly predict if the user saw a movie or not.</p>
+<p>Given these findings, we can try an alternative approach where instead of performing offline testing as we did here, we can instead implement online testing by evaluating user behavior via hypothesis testing. For instance, we can perform an A/B test by splitting the user base such that one half of randomly selected users is served articles via the current way (the control group) and the other half is simultaneously served articles by one (or a hybrid) of our recommendation systems above (the test group), and then analyze the click-through-rates (the key metric) for each group to see if applying a recommendation system actually increases CTR.</p>
+<p>For me, as I discussed in the project, another alternative solution could be to try to use some reinforcement learning algorithms. Users' behavior and taste could change over time, and the lack of historical data is a problem that we always faced to. So perhaps if we model such a system as a game of searching and apply even a multi-bandit or e-greedy algorithm, the result could be improved.</p>
 
 </div>
 </div>
