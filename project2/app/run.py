@@ -1,16 +1,19 @@
+import sys
 import json
 import plotly
 import pandas as pd
 
+import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+nltk.download('stopwords')
 
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
-
 
 app = Flask(__name__)
 
@@ -36,6 +39,7 @@ model = joblib.load("../models/classifier.pkl")
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
 @app.route('/index')
+
 def index():
     
     # extract data needed for visuals
@@ -43,8 +47,16 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
-    # create visuals
-    # TODO: Below is an example - modify to create your own visuals
+    # For distribution of categories
+    category_counts = df.drop(['id','message','original','genre'], axis=1).sum()
+    category_names = list(category_counts.index)
+
+    # Most common words
+    word_sets = pd.Series(' '.join(df['message']).lower().split())
+    top10_counts = word_sets[~word_sets.isin(stopwords.words("english"))].value_counts()[:9]
+    top10_names = list(top10_counts.index)
+    
+    # Create visuals
     graphs = [
         {
             'data': [
@@ -57,10 +69,48 @@ def index():
             'layout': {
                 'title': 'Distribution of Message Genres',
                 'yaxis': {
-                    'title': "Count"
+                    'title': "Counts"
                 },
                 'xaxis': {
-                    'title': "Genre"
+                    'title': "Genres"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=category_names,
+                    y=category_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Categories',
+                'yaxis': {
+                    'title': "Counts"
+                },
+                'xaxis': {
+                    'title': "Categories",
+                    'tickangle': "45",
+                    'automargin': True
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=top10_names,
+                    y=top10_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Top 10 Words',
+                'yaxis': {
+                    'title': "Counts"
+                },
+                'xaxis': {
+                    'title': "Words"
                 }
             }
         }
@@ -74,8 +124,15 @@ def index():
     return render_template('master.html', ids=ids, graphJSON=graphJSON)
 
 
+
+
+
+
 # web page that handles user query and displays model results
 @app.route('/go')
+
+
+
 def go():
     # save user input in query
     query = request.args.get('query', '') 
@@ -91,10 +148,8 @@ def go():
         classification_result=classification_results
     )
 
-
 def main():
     app.run(host='0.0.0.0', port=3000, debug=True)
-
 
 if __name__ == '__main__':
     main()
