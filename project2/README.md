@@ -12,16 +12,22 @@ The main purpose of this project is to build a model to classify disaster messag
 
 ## Related Works:
 1. Firstly I fill in the given guide **ETL Pipeline Preparation_YG.ipynb** and **ML Pipeline Preparation_YG.ipynb**.
-  -in **ETL Pipeline Preparation_YG.ipynb**, I merged the 2 .csv files, split categories and did necessary data cleaning
-  -in **ML Pipeline Preparation_YG.ipynb**, I tried several algorithms given by sklearn for the given requirement.
+
+   -in **ETL Pipeline Preparation_YG.ipynb**, I merged the 2 .csv files, split categories and did necessary data cleaning
+
+   -in **ML Pipeline Preparation_YG.ipynb**, I tried several algorithms given by sklearn for the given requirement.
     -first is random-forest with TDF-df features, and then tried grid-search, and then I tried RidgeClassifierCV as a classifier and achieve the best result among the tests.
 2. And then, based on the guides, I filled the **process_data.py** and **train_classifier.py**.
+
    -in **process_data.py**, for I am not familiar with file_paths, I faced many problems, but after a huge number of tests, I manage to figure it out.
+
    -in **train_classifier.py**, due to RidgeCV acting best in the guide step, so I picked RidgeCV in the model creating function.
 
 3. And then, modify model and DB path in **run.py** and the website magically works
-  -to write everything in function mode also consume several time, and I did not change the initial DB name and model name to my own..
-  -So the DB name and .pkl name as the command given in Instructions: 'data/DisasterResponse.db' and 'models/classifier.pkl'
+
+   -to write everything in function mode also consume several time, and I did not change the initial DB name and model name to my own..
+
+   -So the DB name and .pkl name as the command given in Instructions: 'data/DisasterResponse.db' and 'models/classifier.pkl'
 4. After testing, the website works fine with both English and the original language,
 
 ## Instructions:
